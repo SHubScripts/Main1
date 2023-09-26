@@ -55,7 +55,7 @@ local GetMouseLocation = UserInputService.GetMouseLocation
 local resume = coroutine.resume 
 local create = coroutine.create
 
-local ValidTargetParts = {"Head", "Bodyt"}
+local ValidTargetParts = {"Head", "Body"}
 local PredictionAmount = 0.165
 
 local mouse_box = Drawing.new("Square")
@@ -200,7 +200,7 @@ local function IsPlayerVisible(Player)
     
     if not (PlayerCharacter or LocalPlayerCharacter) then return end 
     
-    local PlayerRoot = FindFirstChild(PlayerCharacter, Options.TargetPart.Value) or FindFirstChild(PlayerCharacter, "Bodyt")
+    local PlayerRoot = FindFirstChild(PlayerCharacter, Options.TargetPart.Value) or FindFirstChild(PlayerCharacter, "Body")
     
     if not PlayerRoot then return end 
     
@@ -223,11 +223,11 @@ local function getClosestPlayer()
         
         if Toggles.VisibleCheck.Value and not IsPlayerVisible(Player) then continue end
 
-        local Bodyt = FindFirstChild(Character, "Bodyt")
+        local Body = FindFirstChild(Character, "Body")
         local Humanoid = FindFirstChild(Character, "Humanoid")
-        if not Bodyt or not Humanoid or Humanoid and Humanoid.Health <= 0 then continue end
+        if not Body or not Humanoid or Humanoid and Humanoid.Health <= 0 then continue end
 
-        local ScreenPosition, OnScreen = getPositionOnScreen(Bodyt.Position)
+        local ScreenPosition, OnScreen = getPositionOnScreen(Body.Position)
         if not OnScreen then continue end
 
         local Distance = (getMousePosition() - ScreenPosition).Magnitude
@@ -369,7 +369,7 @@ resume(create(function()
             if getClosestPlayer() then 
                 local Root = getClosestPlayer().Parent.PrimaryPart or getClosestPlayer()
                 local RootToViewportPoint, IsOnScreen = WorldToViewportPoint(Camera, Root.Position);
-                -- using PrimaryPart instead because if your Target Part is "Random" it will flicker the square between the Target's Head and Bodyt (its annoying)
+                -- using PrimaryPart instead because if your Target Part is "Random" it will flicker the square between the Target's Head and Body (its annoying)
                 
                 mouse_box.Visible = IsOnScreen
                 mouse_box.Position = Vector2.new(RootToViewportPoint.X, RootToViewportPoint.Y)
